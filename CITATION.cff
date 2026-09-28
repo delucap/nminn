@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the paper and the archived release."
+title: "NMINN: numerical-method-informed neural networks"
+authors:
+  - family-names: "De Luca"
+    given-names: "Pasquale"
+    affiliation: "University of Rome San Raffaele"
+version: 1.0.0
+license: MIT
+repository-code: "https://github.com/delucap/nminn"
+keywords:
+  - structure-preserving discretizations
+  - neural surrogates
+  - positivity
+  - conservation
+  - Modified-Patankar
+  - uniformization
+  - Keller-Segel
+preferred-citation:
+  type: article
+  title: "Numerical-method-informed neural networks, structure-preserving discretizations as architectural inductive bias"
+  authors:
+    - family-names: "De Luca"
+      given-names: "Pasquale"
+  journal: "Journal of Computational Science"
+  year: 2026
+  status: submitted
+  notes: "manuscript JOCSCI-D-26-02458, revised version"

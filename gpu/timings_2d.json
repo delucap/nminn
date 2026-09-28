@@ -1,0 +1,186 @@
+{
+  "64": {
+    "reference": 7.259413480758667,
+    "reference_steps": 3200,
+    "classical_internal_step": {
+      "seconds": 0.9402139186859131,
+      "steps": 320,
+      "speedup": 7.721023201724947
+    },
+    "weights": "untrained",
+    "NMINN": {
+      "seconds": 0.6613748073577881,
+      "macro_steps_per_second": 120.96015619282863,
+      "params": 1190,
+      "speedup": 10.976247356261178
+    },
+    "CNN": {
+      "seconds": 0.041448116302490234,
+      "macro_steps_per_second": 1930.1239027645158,
+      "params": 28930,
+      "speedup": 175.1445934907907
+    },
+    "FNO": {
+      "seconds": 0.02290511131286621,
+      "macro_steps_per_second": 3492.6702126552236,
+      "params": 333698,
+      "speedup": 316.93421531991964
+    },
+    "CNNFLUX": {
+      "seconds": 0.043630361557006836,
+      "macro_steps_per_second": 1833.5855387187908,
+      "params": 29219,
+      "speedup": 166.38444472374167
+    },
+    "CNNPOS": {
+      "seconds": 0.04155540466308594,
+      "macro_steps_per_second": 1925.1406802221509,
+      "params": 28930,
+      "speedup": 174.6924025795199
+    },
+    "CNNPROJ": {
+      "seconds": 0.04273533821105957,
+      "macro_steps_per_second": 1871.9870568216686,
+      "params": 28930,
+      "speedup": 169.86910095121203
+    }
+  },
+  "128": {
+    "reference": 8.462108612060547,
+    "reference_steps": 3200,
+    "classical_internal_step": {
+      "seconds": 1.6355915069580078,
+      "steps": 320,
+      "speedup": 5.17372985617845
+    },
+    "weights": "untrained",
+    "NMINN": {
+      "seconds": 0.6986281871795654,
+      "macro_steps_per_second": 114.51012350785375,
+      "params": 1190,
+      "speedup": 12.112463778799075
+    },
+    "CNN": {
+      "seconds": 0.1358656883239746,
+      "macro_steps_per_second": 588.8168012606561,
+      "params": 28930,
+      "speedup": 62.28289656092177
+    },
+    "FNO": {
+      "seconds": 0.045560359954833984,
+      "macro_steps_per_second": 1755.9123782013041,
+      "params": 333698,
+      "speedup": 185.73401572001214
+    },
+    "CNNFLUX": {
+      "seconds": 0.13810300827026367,
+      "macro_steps_per_second": 579.2777507311229,
+      "params": 29219,
+      "speedup": 61.27389054046122
+    },
+    "CNNPOS": {
+      "seconds": 0.13547396659851074,
+      "macro_steps_per_second": 590.5193596131069,
+      "params": 28930,
+      "speedup": 62.46298698213189
+    },
+    "CNNPROJ": {
+      "seconds": 0.1370694637298584,
+      "macro_steps_per_second": 583.645677330926,
+      "params": 28930,
+      "speedup": 61.73591390667425
+    }
+  },
+  "256": {
+    "reference": 10.804508924484253,
+    "reference_steps": 3200,
+    "classical_internal_step": {
+      "seconds": 4.433533430099487,
+      "steps": 320,
+      "speedup": 2.4369972832801676
+    },
+    "weights": "untrained",
+    "NMINN": {
+      "seconds": 0.8582134246826172,
+      "macro_steps_per_second": 93.21690584085823,
+      "params": 1190,
+      "speedup": 12.589536138379513
+    },
+    "CNN": {
+      "seconds": 0.4892094135284424,
+      "macro_steps_per_second": 163.52915088652284,
+      "params": 28930,
+      "speedup": 22.0856521270846
+    },
+    "FNO": {
+      "seconds": 0.14266633987426758,
+      "macro_steps_per_second": 560.7489480034626,
+      "params": 333698,
+      "speedup": 75.7327126637321
+    },
+    "CNNFLUX": {
+      "seconds": 0.4919002056121826,
+      "macro_steps_per_second": 162.63461386530204,
+      "params": 29219,
+      "speedup": 21.96483921172133
+    },
+    "CNNPOS": {
+      "seconds": 0.4895772933959961,
+      "macro_steps_per_second": 163.40627124487932,
+      "params": 28930,
+      "speedup": 22.069056449774912
+    },
+    "CNNPROJ": {
+      "seconds": 0.49147891998291016,
+      "macro_steps_per_second": 162.77402091382024,
+      "params": 28930,
+      "speedup": 21.983667020469465
+    }
+  },
+  "512": {
+    "reference": 24.934211492538452,
+    "reference_steps": 3200,
+    "classical_internal_step": {
+      "seconds": 11.250426054000854,
+      "steps": 320,
+      "speedup": 2.2162904207233463
+    },
+    "weights": "untrained",
+    "NMINN": {
+      "seconds": 1.5581622123718262,
+      "macro_steps_per_second": 51.34253633209628,
+      "params": 1190,
+      "speedup": 16.002320743347852
+    },
+    "CNN": {
+      "seconds": 2.0199315547943115,
+      "macro_steps_per_second": 39.605302372805575,
+      "params": 28930,
+      "speedup": 12.344087319868365
+    },
+    "FNO": {
+      "seconds": 0.6548769474029541,
+      "macro_steps_per_second": 122.16035442575289,
+      "params": 333698,
+      "speedup": 38.07465141568972
+    },
+    "CNNFLUX": {
+      "seconds": 2.0252344608306885,
+      "macro_steps_per_second": 39.50159922085588,
+      "params": 29219,
+      "speedup": 12.311765365828908
+    },
+    "CNNPOS": {
+      "seconds": 2.0226144790649414,
+      "macro_steps_per_second": 39.552767385005644,
+      "params": 28930,
+      "speedup": 12.327713338661349
+    },
+    "CNNPROJ": {
+      "seconds": 2.023974895477295,
+      "macro_steps_per_second": 39.52618195945279,
+      "params": 28930,
+      "speedup": 12.319427255869423
+    }
+  }
+}
