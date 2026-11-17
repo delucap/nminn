@@ -134,6 +134,35 @@ def collect(problem, rundir):
     return d, out, r_nm, r_nf, preds
 
 
+PAPER_SEED = {"A": 7, "B": 11}
+
+
+def collect_tagged(problem, tag):
+    """Second revision: the learned steppers refitted to convergence by select1d_r2.py replace those of the
+    first revision, and everything else, the physics-informed runs and their predictions, is taken unchanged
+    from results_1d.json and res<problem>_gpu.npz, since those runs were not repeated. Fit times come from
+    the sequential sweep select_1d<tag>_timing.json when it exists."""
+    base = json.load(open(os.path.join(HERE, "results_1d.json")))[problem]
+    sel = json.load(open(os.path.join(HERE, f"select_1d{tag}.json")))[problem][str(PAPER_SEED[problem])]
+    tpath = os.path.join(HERE, f"select_1d{tag}_timing.json")
+    tsel = json.load(open(tpath)).get(problem, {}).get(str(PAPER_SEED[problem]), {}) if os.path.exists(tpath) else {}
+    out = {}
+    for name in ("NMINN", "neural stepper"):
+        e = dict(sel[name])
+        e["params"] = base[name]["params"]
+        if name in tsel:
+            e["seconds"] = tsel[name]["seconds"]
+            e["seconds_source"] = os.path.basename(tpath)
+        out[name] = e
+    for k, v in base.items():
+        if k.startswith("PINN"):
+            out[k] = v
+    npz = dict(np.load(os.path.join(HERE, f"res{problem}_gpu.npz")))
+    npz["r_nm"] = np.load(os.path.join(HERE, f"sel_{problem}_NMINN{tag}.npy"))
+    npz["r_nf"] = np.load(os.path.join(HERE, f"sel_{problem}_neural{tag}.npy"))
+    return out, npz
+
+
 def table(title, res, conservative):
     print(f"\n=== {title} ===")
     hdr = f"{'method':<16}{'relL2':>11}{'extrap':>11}{'min':>12}"
@@ -153,7 +182,23 @@ def table(title, res, conservative):
 
 
 if __name__ == "__main__":
-    rundir = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, "pinn_runs")
+    import argparse
+    ap = argparse.ArgumentParser()
+    ap.add_argument("rundir", nargs="?", default=os.path.join(HERE, "pinn_runs"))
+    ap.add_argument("--tag", default="", help='"_r2": learned steppers refitted to convergence (select1d_r2.py)')
+    args = ap.parse_args()
+    if args.tag:
+        allres = {}
+        for problem in ("A", "B"):
+            res, npz = collect_tagged(problem, args.tag)
+            allres[problem] = res
+            table(f"Problem {problem}, second revision", res, problem == "B")
+            np.savez(os.path.join(HERE, f"res{problem}_gpu{args.tag}.npz"), **npz)
+        with open(os.path.join(HERE, f"results_1d{args.tag}.json"), "w") as f:
+            json.dump(allres, f, indent=2, default=float)
+        print(f"\nwrote results_1d{args.tag}.json")
+        sys.exit(0)
+    rundir = args.rundir
     allres = {}
     for problem in ("A", "B"):
         d, res, r_nm, r_nf, preds = collect(problem, rundir)

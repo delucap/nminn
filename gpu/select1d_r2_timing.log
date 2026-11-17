@@ -1,0 +1,6 @@
+52 fits on 1 processes
+fits done in 2780 s
+A seed 7      NMINN           K*=30  nit=51   loss=4.382192e-04 relL2=1.0645e-02 extrap=1.1623e-02 min=5.55e-17  d=0.0514509 r=6.06722 b=5.31796e-10
+A seed 7      neural stepper  K*=30  nit=225  loss=4.215440e-04 relL2=1.2055e-01 extrap=1.3293e-01 min=5.55e-17
+A true coefficients relL2=7.7577e-05 extrap=8.5223e-05 clean losses {'5': 3.0799830608875076e-12, '10': 8.968492600711966e-12, '20': 2.482126973482157e-11, '30': 4.2229118243699765e-11}
+wrote select_1d_r2_timing.json

@@ -1,0 +1,58 @@
+{
+  "_setup": {
+    "M": 128,
+    "dt_ref": 0.0005,
+    "Dt": 0.02,
+    "n_macro": 80,
+    "ntrain": 25,
+    "noise": 0.0,
+    "noise_scaling": "per snapshot maximum",
+    "noise_seed": 3,
+    "ic": "bumps",
+    "K": 6,
+    "batch": 4,
+    "iters": 700,
+    "n_sub": 4,
+    "dtype": "float64",
+    "reference_seconds": 63.8032705783844,
+    "true": {
+      "Du": 0.0001,
+      "Dv": 0.001,
+      "chi": 0.02,
+      "alpha": 1.0,
+      "beta": 1.0
+    },
+    "u_scale": 76.38297470309071,
+    "v_scale": 1.6281966469132632,
+    "mass0": 2708.1863161323795,
+    "torch": "2.13.0+cu130",
+    "device_name": "NVIDIA GeForce RTX 4080 SUPER"
+  },
+  "NMINN": {
+    "relL2_u": 0.025242415964956123,
+    "relL2_v": 0.07386222922331397,
+    "relL2_u_extrap": 0.02492865428624091,
+    "min_u": 0.007523869148830603,
+    "min_v": 0.0,
+    "mass_drift": 1.9797276262027084e-13,
+    "peak_ratio": 0.980158241005442,
+    "steps": 81,
+    "finite": true,
+    "train_loss": 3.638343129885387e-05,
+    "seconds": 1564.6986057758331,
+    "iters": 700,
+    "params": 1190,
+    "inference_seconds": 7.2720465660095215,
+    "speedup_vs_reference": 8.773770904687144,
+    "coef": {
+      "Du": 0.00010864930858503275,
+      "Dv": 0.0011453796103124809,
+      "alpha": 1.0000748193222166,
+      "beta": 0.9711336571472687,
+      "chi": 0.010302132225113966,
+      "mean_sensitivity": 0.0181307574517173,
+      "identifiable_chi_alpha_over_beta": 0.018671079772855044,
+      "true_chi_alpha_over_beta": 0.02
+    }
+  }
+}

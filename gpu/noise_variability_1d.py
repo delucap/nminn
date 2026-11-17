@@ -8,6 +8,8 @@ the paper (seed 7 for A, 11 for B) is included from select_1d.json and pinn_runs
 the run with the lowest training loss among its three initializations, as in the paper.
 
     python noise_variability_1d.py --seeds 21 22 23 24
+    python noise_variability_1d.py --seeds 21 22 23 24 --tag _r2     NMINN fits run to convergence
+                                                                      (select1d_r2.py), PINN runs unchanged
 """
 from __future__ import annotations
 
@@ -61,7 +63,9 @@ def stats(vals):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--seeds", type=int, nargs="+", default=[21, 22, 23, 24])
+    ap.add_argument("--tag", default="")
     a = ap.parse_args()
+    sel_r2 = json.load(open(os.path.join(HERE, f"select_1d{a.tag}.json"))) if a.tag else None
     out = {}
     for problem in ("A", "B"):
         d = load(problem)
@@ -70,7 +74,8 @@ def main():
         mass0 = float(traj[0].sum())
         per_seed = {}
         # the realization of the paper
-        base = json.load(open(os.path.join(HERE, "select_1d.json")))[problem]["NMINN"]
+        base = sel_r2[problem][str(d["cfg"]["seed"])]["NMINN"] if sel_r2 else \
+            json.load(open(os.path.join(HERE, "select_1d.json")))[problem]["NMINN"]
         entry = {"NMINN": base}
         for variant in (("hardpos", "project") if conservative else ("hardpos",)):
             e = pinn_entry(problem, os.path.join(HERE, "pinn_runs"), traj, ntrain, conservative, mass0, variant)
@@ -78,16 +83,28 @@ def main():
                 entry[f"PINN {variant}"] = e
         per_seed[str(d["cfg"]["seed"])] = entry
         for s in a.seeds:
-            p = os.path.join(HERE, f"select_1d_noise{s}.json")
-            if not os.path.exists(p) or problem not in json.load(open(p)):
-                continue
-            entry = {"NMINN": json.load(open(p))[problem]["NMINN"]}
+            if sel_r2:
+                if str(s) not in sel_r2.get(problem, {}):
+                    continue
+                entry = {"NMINN": sel_r2[problem][str(s)]["NMINN"]}
+            else:
+                p = os.path.join(HERE, f"select_1d_noise{s}.json")
+                if not os.path.exists(p) or problem not in json.load(open(p)):
+                    continue
+                entry = {"NMINN": json.load(open(p))[problem]["NMINN"]}
             for variant in (("hardpos", "project") if conservative else ("hardpos",)):
                 e = pinn_entry(problem, os.path.join(HERE, f"pinn_runs_noise{s}"), traj, ntrain, conservative,
                                mass0, variant)
                 if e:
                     entry[f"PINN {variant}"] = e
             per_seed[str(s)] = entry
+        if sel_r2:
+            # the physics-informed runs were not repeated, so their entries are those of the first revision
+            r1 = json.load(open(os.path.join(HERE, "noise_variability_1d.json")))[problem]["per_seed"]
+            for s_, e_ in per_seed.items():
+                for m_, v_ in r1.get(s_, {}).items():
+                    if m_.startswith("PINN"):
+                        e_[m_] = v_
         methods = sorted({m for e in per_seed.values() for m in e})
         summary = {}
         for m in methods:
@@ -107,9 +124,9 @@ def main():
             if "coef" in s_:
                 line += "  " + " ".join(f"{k}={v['mean']:.4f}+-{v['std']:.4f}" for k, v in s_["coef"].items())
             print(line)
-    with open(os.path.join(HERE, "noise_variability_1d.json"), "w") as f:
+    with open(os.path.join(HERE, f"noise_variability_1d{a.tag}.json"), "w") as f:
         json.dump(out, f, indent=2, default=float)
-    print("\nwrote noise_variability_1d.json")
+    print(f"\nwrote noise_variability_1d{a.tag}.json")
 
 
 if __name__ == "__main__":

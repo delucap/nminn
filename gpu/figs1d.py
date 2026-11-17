@@ -1,4 +1,9 @@
-"""Figures for the 1D study, including the physics-informed baselines. Run collect1d.py first."""
+"""Figures for the 1D study, including the physics-informed baselines. Run collect1d.py first.
+
+    python figs1d.py               first revision (resA_gpu.npz, resB_gpu.npz)
+    python figs1d.py --tag _r2     fits run to convergence (collect1d.py --tag _r2 first)
+"""
+import argparse
 import os
 
 import matplotlib
@@ -10,6 +15,9 @@ import matplotlib.pyplot as plt  # noqa: E402
 HERE = os.path.dirname(os.path.abspath(__file__))
 FIG = os.path.abspath(os.path.join(HERE, "..", "figs"))  # figures of the paper, regenerated in place
 os.makedirs(FIG, exist_ok=True)
+_ap = argparse.ArgumentParser()
+_ap.add_argument("--tag", default="")
+TAG = _ap.parse_args().tag
 
 STYLE = {"NMINN": dict(color="C0", ls="-", lw=1.9),
          "neural stepper": dict(color="C3", ls=":", lw=1.6),
@@ -22,7 +30,7 @@ def rel_series(R, truth, n):
 
 
 # ------------------------------------------------------------------ problem A
-A = np.load(os.path.join(HERE, "resA_gpu.npz"))
+A = np.load(os.path.join(HERE, f"resA_gpu{TAG}.npz"))
 x, traj, dt, ntrain = A["x"], A["traj"], float(A["dt"]), int(A["ntrain"])
 curves = {"NMINN": A["r_nm"], "neural stepper": A["r_nf"],
           "PINN": A["pinn_vanilla"], "PINN (positive output)": A["pinn_hardpos"]}
@@ -54,11 +62,11 @@ ax[2].set_xlabel("$t$"); ax[2].set_ylabel(r"$\min_i u_i$")
 ax[2].set_title("(c) positivity")
 ax[2].grid(alpha=0.3)
 fig.tight_layout()
-fig.savefig(os.path.join(FIG, "fig_nminn_A.pdf"), bbox_inches="tight")
-print("wrote fig_nminn_A.pdf")
+fig.savefig(os.path.join(FIG, f"fig_nminn_A{TAG}.pdf"), bbox_inches="tight")
+print(f"wrote fig_nminn_A{TAG}.pdf")
 
 # ------------------------------------------------------------------ problem B
-B = np.load(os.path.join(HERE, "resB_gpu.npz"))
+B = np.load(os.path.join(HERE, f"resB_gpu{TAG}.npz"))
 trajB, dtB, ntrainB = B["traj"], float(B["dt"]), int(B["ntrain"])
 curvesB = {"NMINN": B["r_nm"], "neural stepper": B["r_nf"],
            "PINN": B["pinn_vanilla"], "PINN (positive output)": B["pinn_hardpos"]}
@@ -88,5 +96,5 @@ ax2[2].set_xlabel("$t$"); ax2[2].set_ylabel("relative mass drift")
 ax2[2].set_title("(c) conservation")
 ax2[2].grid(alpha=0.3, which="both")
 fig2.tight_layout()
-fig2.savefig(os.path.join(FIG, "fig_nminn_B.pdf"), bbox_inches="tight")
-print("wrote fig_nminn_B.pdf")
+fig2.savefig(os.path.join(FIG, f"fig_nminn_B{TAG}.pdf"), bbox_inches="tight")
+print(f"wrote fig_nminn_B{TAG}.pdf")
